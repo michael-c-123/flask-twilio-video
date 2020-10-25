@@ -300,31 +300,19 @@ function zoomTrack(trackElement) {
     }
 };
 
+const MAG = 140;
 function setPositions() {
     let chairs = container.children;
     let n = chairs.length;
-    if (n == 0)
+    if (n <= 2)
         return;
-
-    let containerStyle = window.getComputedStyle(container);
-    let r = parseInt(containerStyle.getPropertyValue('width'));
-    let vertR = parseInt(containerStyle.getPropertyValue('height'));
-    r /= 2;
-    
-    if (n == 1) {
-        chairs[0].style.left = r + 'px';
-        chairs[0].style.bottom = vertR + 'px';
-    } else {
-        let step = Math.PI / (n - 1);
-        for (let i = 0; i < n; i++) {
-            let theta = Math.PI - step * i;
-            let ellipseR = r * vertR / Math.sqrt(Math.pow(vertR * Math.cos(theta), 2) + Math.pow(r * Math.sin(theta), 2))
-            let x = ellipseR * Math.cos(theta);
-            let y = ellipseR * Math.sin(theta);
-            chairs[i].style.left = (x + r) + 'px';
-            chairs[i].style.bottom = y + 'px';
-        }
+    let step = 2*MAG / (n - 1);
+    for (let i = 0; i < n; i++) {
+        let y = MAG - Math.sqrt(MAG*MAG - Math.pow(-MAG + i * step, 2));
+        console.log(y);
+        chairs[i].style.paddingTop = y + 'px';
     }
+    
 }
 
 addLocalVideo();

@@ -237,7 +237,7 @@ function trackUnsubscribed(track) {
 
 function disconnect() {
     room.disconnect();
-    while (container.lastChild.id != 'local')
+    while (container.children.length > 0)
         container.removeChild(container.lastChild);
     button.innerHTML = 'Join call';
     connected = false;
